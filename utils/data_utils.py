@@ -43,7 +43,7 @@ def get_loader(args):
                                     train=False,
                                     download=True,
                                     transform=transform_test) if args.local_rank in [-1, 0] else None
-    elif args.dataset == "custom":     # ================== CUSTOM DATASET ==================
+    elif args.dataset == "wider":     # ================== WIDER DATASET ==================
         train_dir = os.path.join(args.data_path, "train")
         val_dir   = os.path.join(args.data_path, "val")
 
@@ -60,8 +60,23 @@ def get_loader(args):
         num_classes = len(trainset.classes)
         logger.info(f"Number of classes: {num_classes}")
         logger.info(f"Classes: {trainset.classes}")
-    else:
-        raise ValueError("Unsupported dataset")
+    else:# ================== REI DATASET ==================
+        train_dir = os.path.join(args.data_path, "train")
+        val_dir   = os.path.join(args.data_path, "val")
+
+        trainset = datasets.ImageFolder(
+            root=train_dir,
+            transform=transform_train
+        )
+
+        testset = datasets.ImageFolder(
+            root=val_dir,
+            transform=transform_test
+        ) if args.local_rank in [-1, 0] else None
+
+        num_classes = len(trainset.classes)
+        logger.info(f"Number of classes: {num_classes}")
+        logger.info(f"Classes: {trainset.classes}")
 
     if args.local_rank == 0:
         torch.distributed.barrier()
