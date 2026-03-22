@@ -256,7 +256,7 @@ def main():
     # Required parameters
     parser.add_argument("--name", required=True,
                         help="Name of this run. Used for monitoring.")
-    parser.add_argument("--dataset", choices=["cifar10", "cifar100"], default="cifar10",
+    parser.add_argument("--dataset", choices=["cifar10", "cifar100", "wider"], default="cifar10",
                         help="Which downstream task.")
     parser.add_argument("--model_type", choices=["ViT-B_16", "ViT-B_32", "ViT-L_16",
                                                  "ViT-L_32", "ViT-H_14", "R50-ViT-B_16"],
@@ -266,7 +266,7 @@ def main():
                         help="Where to search for pretrained ViT models.")
     parser.add_argument("--output_dir", default="output", type=str,
                         help="The output directory where checkpoints will be written.")
-
+    parser.add_argument("--data_path", type=str, default="./data")  
     parser.add_argument("--img_size", default=224, type=int,
                         help="Resolution size")
     parser.add_argument("--train_batch_size", default=512, type=int,
